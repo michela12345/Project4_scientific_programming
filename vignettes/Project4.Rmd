@@ -1,0 +1,48 @@
+---
+title: "Project4"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Project4}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(Project4)
+```
+
+# Introduction
+The sequence to be aligned to a reference may have additional bases that are not present in the reference or may lack bases that are present in the reference. The CIGAR string is a sequence of base lengths and associated operations. It is used to indicate, for example, which bases line up (or match or mismatch) with the reference, which are removed from the reference and which are not present in the reference. CIGAR stands for Concise Idiosyncratic Gapped Alignment Report, a compressed representation of an alignment and used BAM/SAM file.
+
+## CIGAR string
+Understanding the CIGAR string will help you understand how your query sequence aligns to the reference genome.CIGAR strings have a number of operators:
+
+M = Match (Exact match of x positions). In most cases it is preferred to use the '=' and 'X' characters to denote matches or mismatches rather than the older 'M' character, which is ambiguous.
+
+N	= Alignment gap (Next x positions on ref don’t match)
+
+D	= Deletion (Next x positions on ref don’t match)
+
+I =	Insertion (Next x positions on query don’t match)
+
+S = Soft clipping (Segment of the query sequence that does not appear in the alignment.)
+
+## Function
+The function takes as input the reference genome, a bam or sam file and the srtinga cigar; with the "align" function, you will have strings of numbers identifying the positions where alignment occurred that satisfy the cigar function. If there are multiple sequences that satisfy the cigar alignment, multiple data strings will be used to display all matches.
+
+### Example number 1
+```{r}
+align(('AAGTCTAGAA'),('..GT.TAG..'),('2M1D3M'))
+```
+
+### Example number 2
+```{r}
+align(('AAGTCGTAGAATACGTAAGTCGTAGAATACGT'),('AACACGTAG..TAGCTAACACGTAG..TAGCT'),('2S5M2D2M'))
+```
